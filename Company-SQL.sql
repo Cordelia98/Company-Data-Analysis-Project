@@ -203,17 +203,17 @@ VALUES
 ----------------
 SELECT first_name, last_name,  hire_date
 FROM employee
-WHERE hire_date > "2024-02-04"; -- bu tarihten sonra işe giren kişilerin isim, soy isim ve işe giriş tarihi bilgileri. 
+WHERE hire_date > "2024-02-04"; -- First name, last name, and hire date of employees hired after a given date. 
 -------------------
 SELECT COUNT(id) as "employee number", department_name
 FROM department JOIN employee ON department.department_id = employee.department_id
 GROUP BY department_name 
-HAVING  0 < COUNT(id) < 15 ;           -- aggregate olmayanların hepsini group by a yazarsın
+HAVING  0 < COUNT(id) < 15 ;          
 
 ---------------------
 SELECT product_name, price
 FROM product
-WHERE price > (SELECT AVG(price) FROM product);  -- ortalama fiyattan daha pahalı ürünlerin isim ve fiyat bilgisi subquery ile yapıldı. 
+WHERE price > (SELECT AVG(price) FROM product);  -- Names and prices of products priced above the average (using a subquery).
 -----------------------
 SELECT AVG(price)
 FROM product;
@@ -222,51 +222,51 @@ SELECT COUNT(supplier_name), product_name
 FROM Supplier 
 INNER JOIN provide  ON supplier.supplier_id = provide.supplier_id
 INNER JOIN Product  ON provide.product_id = product.product_id
-GROUP BY product_name;                                 -- Hangi satıcı hangi ürünü satıyor. 
+GROUP BY product_name;                                 -- Which seller is selling which product.
 ------------------
 SELECT first_name,last_name, email
-FROM customer;      -- müşteri isim, soyisimi email bilgileri. 
+FROM customer;      -- First name, last name, and email details of customers.
 ---------------
 SELECT AVG(salary) as "average salary" 
-FROM employee;      -- ort. maaş yazdırma.
+FROM employee;      -- Display the average salary.
 --------------      
 SELECT first_name, last_name, salary
 FROM employee
-WHERE salary = (SELECT MAX(salary) FROM employee); -- En yüksek maaşa sahip kişinin isim,soyisim ve maaş bilgisi. 
+WHERE salary = (SELECT MAX(salary) FROM employee); -- Details of the employee with the highest salary (first name, last name, and salary).
 -----------------
 SELECT first_name, last_name, salary
 FROM employee
-WHERE salary = (SELECT MIN(salary) FROM employee); -- En düşük maaşa sahip kişinin isim,soyisim ve maaş bilgisi. 
+WHERE salary = (SELECT MIN(salary) FROM employee); -- Details of the employee with the lowest salary (first name, last name, and salary). 
 -------------------
 SELECT product_name, price
 From product
-WHERE price = (SELECT MAX(price) FROM product);  -- En pahalı ürünün isim ve fiyat bilgisi.(En pahalı ürünü bulma.)
+WHERE price = (SELECT MAX(price) FROM product);  -- Name and price of the most expensive product.
 ----------------
 SELECT product_name, price
 From product
-WHERE price = (SELECT MIN(price) FROM product);  -- En ucuz ürünün isim ve fiyat bilgisi.(En ucuz ürünü bulma.)
+WHERE price = (SELECT MIN(price) FROM product);  -- Name and price of the cheapest product.
 ------------------
 SELECT first_name, last_name, COUNT(sell.product_id) AS num_products_sold
 FROM employee 
 INNER JOIN Sell ON employee.id = sell.employee_id
 GROUP BY employee.first_name, employee.last_name 
 ORDER BY num_products_sold DESC 
-LIMIT 1;    -- En çok ürün satan employee inin isim, soyisim ve kaç tane sattığını göster. 
+LIMIT 1;    -- Name, surname, and total number of products sold by the employee who sold the most products.
 -------------------
 SELECT product_name, COUNT(sell.product_id) AS num_sold
 FROM product 
 INNER JOIN Sell  ON product.product_id = sell.product_id
 GROUP BY product.product_id, product.product_name
 ORDER BY num_sold DESC
-LIMIT 1;    -- En çok hangi üründen satılmıştır. 
+LIMIT 1;    -- The most sold product.
 ----------------
 SELECT email
 FROM employee
-WHERE age < 27;  -- 27 yaşından küçük olanların emailleri. 
+WHERE age < 27;  -- Email addresses of customers under the age of 27. 
 ----------------
 SELECT COUNT(customer_id) as "number of customer"
-FROM customer;   -- müşteri sayısı. 
+FROM customer;   -- Customer count. 
 ---------------
 SELECT COUNT(*) as quantity, product_name 
 FROM buys JOIN product ON buys.product_id = product.product_id 
-group by product_name;   -- hangi üründen kaç adet satılmış.
+group by product_name;   -- Number of units sold per product.
